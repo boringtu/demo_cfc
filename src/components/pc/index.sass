@@ -1,0 +1,494 @@
+*
+	box-sizing: border-box
+	outline: 0
+	margin: 0
+	padding: 0
+h1, h2, h3, h4, h5, h6
+	font-size: 100%
+a
+	text-decoration: none
+	&:active,
+	&:focus
+		outline: none
+menu, ol, ul
+	list-style: none
+table
+	border-collapse: collapse
+	border-spacing: 0
+fieldset, img
+	border: 0
+legend
+	display: none
+address, cite, dfn, em, var
+	font-style: normal
+code, kbd, pre, samp
+	font-family: 'courier new', courier, monospace
+input, button, textarea, select
+	font-size: 100%
+abbr[title]
+	border-bottom: 1px dotted
+	cursor: help
+button
+	cursor: pointer
+.clear
+	zoom: 1
+	&:after
+		content: ""
+		display: block
+		clear: both
+
+@keyframes icon-spin
+	0%
+		transform: rotate(0deg)
+	100%
+		transform: rotate(359deg)
+
+.icon
+	display: inline-block
+.icon-spin
+	animation: 2s linear 0s normal none infinite running icon-spin
+
+.icon-fast
+	animation-duration: 1s
+
+.icon-pulse
+	animation: 1s steps(8) 0s normal none infinite running icon-spin
+
+img[src=""]
+	display: none
+
+.el-button--primary
+	background-color: #0083ff
+	border-color: #0083ff
+
+body
+	position: absolute
+	z-index: 1
+	top: 0
+	right: 0
+	bottom: 0
+	left: 0
+	overflow: auto
+	background-color: #fff
+	font-size: 14px
+	width: 100%
+	height: 100%
+	min-height: 880px
+	min-width: 700px
+	display: flex
+	justify-content: center
+	align-items: center
+#app
+	font-family: "Helvetica Neue", Helvetica, "PingFang SC", "Hiragino Sans GB", "Microsoft YaHei", "微软雅黑", Arial, sans-serif
+	-webkit-font-smoothing: antialiased
+	-moz-osx-font-smoothing: grayscale
+	text-align: center
+	color: #2c3e50
+	width: 870px
+	height: 600px
+	box-shadow: 4px 7px 20px 0px rgba(0, 0, 0, .04)
+	border: 1px solid rgba(235, 235, 235, 1)
+	border-radius: 5px
+	position: relative
+	display: flex
+	flex-direction: column
+
+.dialog-box
+	position: fixed
+	z-index: 1000
+	top: 0
+	right: 0
+	bottom: 0
+	left: 0
+	display: flex
+	justify-content: center
+	align-items: center
+	.dialog-mask
+		position: absolute
+		z-index: 1
+		top: 0
+		right: 0
+		bottom: 0
+		left: 0
+		background-color: rgba(1, 1, 1, .2)
+	.dialog-content
+		position: relative
+		z-index: 2
+		width: 400px
+		height: 260px
+		border-radius: 5px
+		background-color: #fff
+		h2
+			font-size: 20px
+			line-height: 20px
+			padding: 18px 0 16px
+			color: #333
+			border-bottom: 1px solid #f5f5f5
+		ul
+			margin-top: 30px
+			li
+				display: flex
+				justify-content: flex-end
+				padding-right: 54px
+				line-height: 30px
+				label
+					font-size: 14px
+					font-weight: 400
+					color: #333
+				.el-input
+					width: 240px
+					margin-left: 10px
+					input
+						height: 30px
+						line-height: 30px
+				~ li
+					margin-top: 14px
+		.el-button
+			width: 100px
+			height: 36px
+			line-height: 36px
+			padding: 0
+			margin-top: 30px
+
+.tab-box
+	height: 60px
+	background-color: #f0f2f5
+	display: flex
+	justify-content: space-between
+	align-items: center
+	.logo
+		margin-left: 28px
+	.close
+		border: 0
+		background-color: transparent
+		position: absolute
+		z-index: 1
+		top: 20px
+		right: 24px
+		.icon
+			font-size: 20px
+			color: #666
+		&:hover
+			.icon
+				color: #333
+	.closing-confirm-box
+		position: absolute
+		z-index: 100
+		right: 5px
+		top: 55px
+		border: 1px solid #cecece
+		border-radius: 5px
+		background-color: #fff
+		width: 240px
+		text-align: center
+		p
+			font-size: 20px
+			line-height: 20px
+			padding: 20px 0
+			color: #333
+		> div
+			display: flex
+			justify-content: space-between
+			padding: 0 12px 20px
+		.el-button
+			border-radius: 5px
+			line-height: 34px
+			padding: 0 32px
+			font-size: 16px
+			~ button
+				margin-left: 0px
+		.box-arrow
+			position: absolute
+			z-index: 2
+			top: -10px
+			right: 10px
+			width: 36px
+			height: 10px
+			overflow: hidden
+			display: block
+			i
+				display: block
+				border: 1px solid #cecece
+				width: 18px
+				height: 18px
+				background-color: #fff
+				transform: rotate(45deg)
+				position: relative
+				top: 3px
+				left: 9px
+.content-box
+	flex-grow: 1
+	display: flex
+	justify-content: space-between
+	align-items: stretch
+	
+	.chat-box
+		flex-grow: 1
+		position: relative
+		display: flex
+		flex-direction: column
+		justify-content: space-between
+		.queue-msg
+			height: 24px
+			line-height: 24px
+			text-align: center
+			font-size: 12px
+			color: #666
+			background-color: #e1e3e6
+		.chat-history
+			flex-grow: 1
+			position: relative
+			border-bottom: 1px solid #ebebeb
+			text-align: center
+			.loading-history
+				padding: 10px 0
+				.icon
+					font-size: 16px
+					line-height: 16px
+			.unreadCount
+				position: absolute
+				z-index: 10
+				right: 12px
+				font-size: 14px
+				line-height: 24px
+				color: #7acc96
+				border: 1px solid #7acc96
+				border-radius: 5px
+				padding: 0 8px 0 12px
+				background-color: #fff
+				transition: background-color .1s linear 0s
+				&:hover
+					background-color: #fafafa
+				a
+					color: #7acc96
+				.icon
+					color: #7acc96
+					font-size: 12px
+					border: 0
+					background-color: transparent
+					margin-left: 10px
+				&[data-type="up"]
+					top: 10px
+				&[data-type="down"]
+					bottom: 10px
+		.chat-window
+			overflow: auto
+			position: absolute
+			top: 0
+			right: 0
+			bottom: 0
+			left: 0
+			.chat-content
+				padding: 0 18px
+				font-size: 13px
+				text-align: left
+				&:first-child
+					padding-top: 12px
+				.time-line
+					text-align: center
+					font-size: 14px
+					line-height: 14px
+					color: #666
+				// 气泡
+				.msg-bubble
+					// box-shadow: 0 0 10px 0 rgba(102, 102, 102, .06)
+					border: 1px solid
+					border-radius: 5px
+					padding: 8px 12px
+					position: relative
+					max-width: 100%
+					/deep/ img
+						max-width: 100%
+						max-height: 160px
+				// 气泡箭头
+				.msg-arrow
+					position: absolute
+					z-index: 1
+					top: 18px
+					width: 9px
+					height: 18px
+					overflow: hidden
+					display: block
+					i
+						display: block
+						width: 12px
+						height: 12px
+						transform: rotate(45deg)
+						position: relative
+						bottom: -3px
+						border: 1px solid
+				// 消息
+				.msg-content
+				// 对方的消息
+				.msg-opposite
+					position: relative
+					padding: 9px 40px 9px 0
+					.msg-bubble
+						float: left
+						background-color: #fff
+						border-color: #e2e2e2
+						color: #666
+					.msg-arrow
+						left: -8px
+						i
+							background-color: #fff
+							border-color: #e2e2e2
+							left: 4px
+				// 自己消息
+				.msg-self
+					position: relative
+					padding: 9px 0 9px 40px
+					.msg-bubble
+						float: right
+						border-color: #329dff
+						background-color: #329dff
+						color: #fff
+					.msg-arrow
+						right: -8px
+						i
+							background-color: #329dff
+							border-color: #329dff
+							right: 7px
+				// 时间
+				.msg-time
+				// （新消息）分隔线
+				.separator
+			p.closed-notice
+				font-size: 14px
+				color: #999
+				padding: 20px 0 45px
+		.chat-toolbar
+			flex-shrink: 0
+			position: relative
+			height: 36px
+			background-color: #fafafa
+			display: flex
+			align-items: center
+			.emoji-picker
+				> button
+					border: 0
+					background-color: transparent
+					color: #666
+					margin-left: 20px
+					.icon
+						font-size: 20px
+					&:hover
+						color: #333
+				.box-arrow
+					position: absolute
+					z-index: 2
+					bottom: 28px
+					left: 12px
+					width: 36px
+					height: 16px
+					overflow: hidden
+					display: block
+					i
+						display: block
+						width: 18px
+						height: 18px
+						background-color: #fff
+						transform: rotate(45deg)
+						position: relative
+						bottom: 9px
+						left: 9px
+						box-shadow: 0 0 10px 0 rgba(102, 102, 102, .6)
+				.face-box
+					position: absolute
+					z-index: 1
+					bottom: 44px
+					width: 100%
+					padding: 0 10px
+					> div
+						display: flex
+						flex-wrap: wrap
+						border-radius: 5px
+						background-color: #fff
+						overflow: scroll
+						height: 200px
+						box-shadow: 0 0 10px 0 rgba(102, 102, 102, .6)
+						padding: 4px
+					.face
+						cursor: pointer
+						padding: 2px
+						font-size: 24px
+						width: 29px
+						height: 29px
+						line-height: 29px
+						display: block
+						border-radius: 5px
+						background-color: #fff
+						transition: background-color .1s linear 0s
+						&:hover
+							background-color: #ccc
+			form
+				position: relative
+				margin-left: 20px
+				width: 20px
+				height: 20px
+				overflow: hidden
+				input
+					opacity: 0
+					position: absolute
+					z-index: 10
+					cursor: pointer
+					top: -20px
+					right: 0
+					bottom: 0
+					left: 0
+				.icon
+					position: relative
+					z-index: 1
+					color: #666
+					font-size: 20px
+					line-height: 20px
+				&:hover .icon
+					color: #333
+		.chat-sendbox
+			background-color: #fafafa
+			height: 175px
+			position: relative
+			textarea
+				display: block
+				border: 0
+				resize: none
+				width: 100%
+				outline: 0
+				font-size: 14px
+				line-height: 16px
+				height: 100%
+				padding: 0 5px 0 15px
+				background-color: #fbfbfb
+				overflow-y: visible
+			button.send
+				position: absolute
+				z-index: 1
+				right: 24px
+				bottom: 20px
+				line-height: 34px
+				padding: 0 34px
+				font-size: 16px
+		&.active
+			.chat-toolbar
+				background-color: #fff
+			.chat-sendbox
+				background-color: #fff
+				textarea
+					background-color: #fff
+
+	.advertising-box
+		width: 270px
+		background-color: #f0f0f0
+		a
+			display: block
+			height: 100%
+			img
+				width: 100%
+				height: 100%
+	&.active
+		.chat-toolbar
+			background-color: #fff
+		.chat-sendbox
+			background-color: #fff
+			textarea
+				background-color: #fff

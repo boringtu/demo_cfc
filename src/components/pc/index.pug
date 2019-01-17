@@ -1,0 +1,90 @@
+#app
+	.tab-box
+		a(:href="conf.logo_href" target="_blank" ref="logoA" class="logo")
+			img(:src="conf.logo_media_id" height="40")
+		button.close(@click="eventCloseTheChat")
+			i.icon.icon-close
+		.closing-confirm-box(v-if="confirmToClose")
+			span.box-arrow
+				i
+			p 确定要结束对话吗？
+			div
+				el-button(type="default" @click="confirmToClose = 0") 取消
+				el-button(type="primary" @click="confirmToClose = 0, closingTheChat()") 确定
+	.content-box(:class="{active: isReadyToType}")
+		.chat-box
+			.queue-msg(v-if="queueNum").
+				您好，当前您排在第 {{ queueNum }} 位，请耐心等待
+			.chat-history
+				//- 未读消息提醒（底部）
+				.unreadCount(data-type="down" v-if="newUnreadCount")
+					a(href="javascript:;" @click="eventShowLowerUnread")
+						strong {{ newUnreadCount | calcUnReadCount }} 条新消息
+					button.icon.icon-close(@click="clearNewUnread")
+				//- 消息滚动窗口
+				.chat-window(
+					ref="chatWindow"
+					@scroll="eventScrollHistory"
+				)
+					//- 历史消息加载中
+					.loading-history(v-if="isLoadingHistory")
+						i.icon.icon-loading.icon-spin.icon-fast
+					div(ref="chatWrapper")
+						//- 每一条消息
+						.chat-content(
+							v-for="item in chatHistoryList"
+							:key="item.id"
+							:data-timeline="item.hasTimeline"
+						)
+							//- 时间线
+							.time-line(v-if="item.hasTimeline") {{ item.timeStamp | timeline }}
+							//- 消息体
+							.clear(:class="item.sendType | sideClass")
+								.msg-bubble
+									.msg-content(v-html="renderMessage(item)")
+								.msg-arrow
+									i
+						p.closed-notice(v-if="isClosed") 客服已结束对话，如再次联系客服请重新打开页面
+
+			.chat-toolbar
+				emoji-picker(@emoji="insert" class="emoji-picker" ref="emojiPicker")
+					button(slot="emoji-invoker" slot-scope="{ events }" v-on="events")
+						i.icon.icon-face
+					div(class="face-wrapper" slot="emoji-picker" slot-scope="{ emojis, insert }")
+						span.box-arrow
+							i
+						div.face-box
+							div
+								span(class="face" v-for="(emoji, emojiName) in emojis.People" :key="emojiName" @click="insertEmoji(emoji)") {{ emoji }}
+				form(enctype="multipart/form-data")
+					input(type="file" accept="image/gif, image/jpeg, image/png" @change="eventSendPic" :disabled="isClosed")
+					i.icon.icon-picture
+
+			.chat-sendbox
+				textarea(
+					ref="input"
+					placeholder="请输入消息..."
+					@keyup.enter.exact="eventSend"
+					@focus="isReadyToType = 1"
+					@blur="isReadyToType = 0"
+					v-model="inputText"
+					spellcheck="false"
+					:readonly="isClosed"
+				)
+				el-button.send(type="primary" :disabled="!inputText.trim()" @click="eventSend") 发送
+		.advertising-box
+			a(:href="conf.right_ad_href" target="_blank" ref="advertisingA")
+				img(:src="conf.right_ad_media_id")
+	.dialog-box(v-if="popup")
+		.dialog-mask
+		.dialog-content
+			h2 请填写您的账号，以便我们更好的服务~
+			ul
+				li
+					label 账号
+					el-input(v-model="form.name" placeholder="选填")
+				li
+					label 手机号
+					el-input(v-model="form.phone" placeholder="选填" @keydown.native="eventKeydownPhoneNum($event)")
+			div
+				el-button(type="primary" @click="eventStartChatting") 立即咨询
