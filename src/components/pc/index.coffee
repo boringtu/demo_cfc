@@ -282,6 +282,35 @@ export default
 			return if diff < 0
 			win.velocity scrollTop: "#{ diff }px", {duration: duration}
 
+		# 历史消息区当前位置是否位于最底部
+		isLocateBottom: ->
+			# window element
+			win = @$refs.chatWindow
+			# window height
+			winH = win.offsetHeight
+			# content height
+			conH = @$refs.chatWrapper.offsetHeight
+			# difference value
+			diff = conH - winH
+			# 如果内容没满一屏
+			return 1 if diff < 0
+
+			# all chat element list
+			allEls = [].slice.apply @$refs.chatWrapper.children
+			# the last chat element
+			el = allEls.last()
+
+			# 备注：
+			# 9:	.msg-self/.msg-opposite padding-top/padding-bottom
+			# 34/2	.msg-bubble half height
+
+			# window scrollTop
+			sT = win.scrollTop
+			# total height
+			tH = @$refs.chatWrapper.offsetHeight
+
+			return sT + winH > tH - 9 - 34 / 2
+
 		# Event: 消息发送事件
 		eventSend: ->
 			# 转义（防xss）
@@ -314,8 +343,6 @@ export default
 
 			# window element
 			win = @$refs.chatWindow
-			# window height
-			wT = win.offsetHeight
 			# 备注：
 			# 12:	.chat-content padding-top
 			# 14:	.time-line height
@@ -327,6 +354,9 @@ export default
 			tT = 14
 			# window scrollTop
 			sT = win.scrollTop
+
+			## 处理 newUnreadElList
+			@newUnreadElList = [] if @isLocateBottom()
 
 			## 获取更多历史消息数据
 			@fetchHistory() if sT < cH + tT
@@ -351,8 +381,11 @@ export default
 				# 己方消息，滚动到底部
 				@$nextTick => @scrollToBottom 80
 			else
-				# 对方消息，追加到 newUnreadElList
-				@newUnreadElList.push msg
+				if @isLocateBottom()
+					@$nextTick => @scrollToBottom()
+				else
+					# 对方消息，追加到 newUnreadElList
+					@newUnreadElList.push msg
 
 		# Event: 发送图片
 		eventSendPic: (event) ->
