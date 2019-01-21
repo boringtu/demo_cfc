@@ -4,6 +4,7 @@ import App from './App.vue'
 import axios from 'axios'
 import VueAxios from 'vue-axios'
 import { EmojiPickerPlugin } from 'vue-emoji-picker'
+import twemoji from 'twemoji'
 import ALPHA from '@/assets/scripts/alpha'
 import Utils from '@/assets/scripts/utils'
 import Velocity from 'velocity-animate'
@@ -31,6 +32,7 @@ Vue.config.productionTip = false
 
 window.SockJS = SockJS
 window.Stomp = Stomp
+window.twemoji = twemoji
 
 # 响应拦截器
 axiosInterceptor = axios.interceptors.response.use (res) ->

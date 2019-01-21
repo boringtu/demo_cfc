@@ -47,22 +47,40 @@
 						p.closed-notice(v-if="isClosed") 客服已结束对话，如再次联系客服请重新打开页面
 
 			.chat-toolbar
-				emoji-picker(@emoji="insert" class="emoji-picker" ref="emojiPicker")
-					button(slot="emoji-invoker" slot-scope="{ events }" v-on="events")
-						i.icon.icon-face
-					div(class="face-wrapper" slot="emoji-picker" slot-scope="{ emojis, insert }")
+				.emoji-picker
+					button.icon.icon-face(@click="isShowingEmojiPanel = !isShowingEmojiPanel")
+					.face-wrapper(v-if="isShowingEmojiPanel")
 						span.box-arrow
 							i
 						div.face-box
 							div
-								span(class="face" v-for="(emoji, emojiName) in emojis.People" :key="emojiName" @click="insertEmoji(emoji)") {{ emoji }}
+								span(class="face" v-for="emoji in faces" :key="emoji" @click="insertEmoji(emoji)" v-html="convertFace(emoji)")
+				//- emoji-picker(@emoji="insert" class="emoji-picker" ref="emojiPicker")
+				//- 	button(slot="emoji-invoker" slot-scope="{ events }" v-on="events")
+				//- 		i.icon.icon-face
+				//- 	div(class="face-wrapper" slot="emoji-picker" slot-scope="{ emojis, insert }")
+				//- 		span.box-arrow
+				//- 			i
+				//- 		div.face-box
+				//- 			div
+				//- 				span(class="face" v-for="(emoji, emojiName) in emojis.People" :key="emojiName" @click="insertEmoji(emoji)") {{ emoji }}
 				form(enctype="multipart/form-data")
 					input(type="file" accept="image/gif, image/jpeg, image/png" @change="eventSendPic" :disabled="isClosed")
 					i.icon.icon-picture
 
 			.chat-sendbox
+				edit-box(
+					ref="editBox"
+					placeholder="请输入消息..."
+					:contenteditable="!isClosed"
+					:eventSend="eventSend"
+					:eventFocus="eventInputFocus"
+					:eventBlur="eventInputBlur"
+					@textChanged="eventInputChange"
+					:value="inputText"
+				)
 				textarea(
-					ref="input"
+					v-if="false"
 					placeholder="请输入消息..."
 					@keydown.enter.exact="$event.preventDefault()"
 					@keyup.enter.exact="eventSend"
@@ -90,3 +108,8 @@
 					el-input(v-model="form.phone" placeholder="选填" @keydown.native="eventKeydownPhoneNum($event)")
 			div
 				el-button(type="primary" @click="eventStartChatting") 立即咨询
+
+
+	//- .faceBoxTest(style="position: fixed;z-index:9999;top:0;right:0;bottom:0;left:0;background:#fff;")
+	//- 	ul
+	//- 		li(v-for="item in faces" :key="item" v-html="convertFace(item)" style="width: 16px; height: 16px;")

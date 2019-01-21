@@ -1,5 +1,6 @@
 'use strict'
 import Utils from '@/assets/scripts/utils'
+import editBox from '@/components/editbox'
 
 class SendWS
 	constructor: (@ws, @socket, data) ->
@@ -26,6 +27,8 @@ export default
 		isReadyToType: 0
 		# 是否正在加载历史数据的状态
 		isLoadingHistory: 0
+		# 是否显示 emoji 面板
+		isShowingEmojiPanel: 0
 		# 是否需要确认结束当前对话
 		confirmToClose: 0
 		# 是否无更多历史消息的状态
@@ -61,6 +64,11 @@ export default
 		form:
 			name: ''
 			phone: ''
+
+		faces: ['1F600', '1F601', '1F602', '1F603', '1F604', '1F605', '1F606', '1F607', '1F608', '1F609', '1F60A', '1F60B', '1F60C', '1F60D', '1F60E', '1F60F', '1F610', '1F611', '1F612', '1F613', '1F614', '1F615', '1F616', '1F617', '1F618', '1F619', '1F61A', '1F61B', '1F61C', '1F61D', '1F61E', '1F61F', '1F620', '1F621', '1F622', '1F623', '1F624', '1F625', '1F626', '1F627', '1F628', '1F629', '1F62A', '1F62B', '1F62C', '1F62D', '1F62E', '1F62F', '1F630', '1F631', '1F632', '1F633', '1F634', '1F635', '1F636', '1F637', '1F638', '1F639', '1F63A', '1F63B', '1F63C', '1F63D', '1F63E', '1F63F', '1F640']
+
+	components:
+		'edit-box': editBox
 
 	computed:
 		# 新推送的未读消息条数
@@ -99,6 +107,7 @@ export default
 				"#{ M }-#{ d } #{ H }:#{ m }:#{ s }"
 
 	created: ->
+		window.x = @
 		# 来源地址
 		origin = Utils.getUrlParams().origin
 		if origin
@@ -325,12 +334,13 @@ export default
 		# 向输入框插入表情，并关闭表情选择面板
 		insertEmoji: (emoji) ->
 			# 向输入框追加表情
+			emoji = twemoji.parse(twemoji.convert.fromCodePoint(emoji))
 			@inputText += emoji unless @isClosed
 			# 关闭表情选择面板
-			@$refs.emojiPicker.hide()
+			@isShowingEmojiPanel = 0
 			# 使输入框获取焦点
 			@$nextTick =>
-				@$refs.input.focus()
+				@$refs.editBox.$el.focus()
 
 		# Event: 历史消息列表滚动事件
 		eventScrollHistory: ->
@@ -470,3 +480,12 @@ export default
 			event.preventDefault() unless keyCode in [48..57].concat [96..105]
 			event.preventDefault() if @form.phone.length > 10
 
+		convertFace: (face) ->
+			face = twemoji.convert.fromCodePoint face
+			twemoji.parse face,
+				folder: 'svg'
+				ext: '.svg'
+				
+		eventInputChange: (str) -> @inputText = str
+		eventInputFocus: -> @isReadyToType = 1
+		eventInputBlur: -> @isReadyToType = 0

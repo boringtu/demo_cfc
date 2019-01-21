@@ -85,7 +85,9 @@ body
 	text-align: center
 	color: #2c3e50
 	width: 870px
+	min-width: 870px
 	height: 600px
+	min-height: 600px
 	box-shadow: 4px 7px 20px 0px rgba(0, 0, 0, .04)
 	border: 1px solid rgba(235, 235, 235, 1)
 	border-radius: 5px
@@ -365,13 +367,12 @@ body
 			display: flex
 			align-items: center
 			.emoji-picker
-				> button
+				button
 					border: 0
 					background-color: transparent
 					color: #666
 					margin-left: 20px
-					.icon
-						font-size: 20px
+					font-size: 20px
 					&:hover
 						color: #333
 				.box-arrow
@@ -405,16 +406,13 @@ body
 						border-radius: 5px
 						background-color: #fff
 						overflow: scroll
-						height: 200px
 						box-shadow: 0 0 10px 0 rgba(102, 102, 102, .6)
-						padding: 4px
+						padding: 8px
 					.face
 						cursor: pointer
-						padding: 2px
-						font-size: 24px
-						width: 29px
-						height: 29px
-						line-height: 29px
+						padding: 4px
+						width: 33px
+						height: 33px
 						display: block
 						border-radius: 5px
 						background-color: #fff
@@ -448,6 +446,20 @@ body
 			background-color: #fafafa
 			height: 175px
 			position: relative
+			.edit-box
+				width: 100%
+				height: 100%
+				padding: 0 5px 0 15px
+				background-color: #fbfbfb
+				font-size: 14px
+				line-height: 16px
+				text-align: left
+				img.emoji
+					width: 1.4em
+					height: 1.4em
+					display: inline-block
+					vertical-align: -.3em
+					margin: 0 .05em 0 .1em
 			textarea
 				display: block
 				border: 0
@@ -490,5 +502,6 @@ body
 			background-color: #fff
 		.chat-sendbox
 			background-color: #fff
-			textarea
+			textarea,
+			.editbox
 				background-color: #fff
