@@ -64,6 +64,7 @@
 				textarea(
 					ref="input"
 					placeholder="请输入消息..."
+					@keydown.enter.exact="$event.preventDefault()"
 					@keyup.enter.exact="eventSend"
 					@focus="isReadyToType = 1"
 					@blur="isReadyToType = 0"
