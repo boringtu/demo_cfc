@@ -433,7 +433,16 @@ export default
 			switch msg.messageType
 				when 1
 					# 文本消息
-					msg.message.encodeHTML()
+					text = msg.message
+					text = text.replace /\n|\ /g, (char) ->
+						switch char
+							when '\n'
+								'<br/>'
+							when ' '
+								'&nbsp;'
+							else
+								char
+					text.encodeHTML()
 				when 2
 					# 图片
 					"""
