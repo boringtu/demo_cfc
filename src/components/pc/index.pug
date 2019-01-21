@@ -71,6 +71,7 @@
 					v-model="inputText"
 					spellcheck="false"
 					:readonly="isClosed"
+					maxlength="1000"
 				)
 				el-button.send(type="primary" :disabled="!inputText.trim()" @click="eventSend") 发送
 		.advertising-box
