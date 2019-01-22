@@ -138,6 +138,9 @@ export default
 			@socket?.close()
 			@ws?.disconnect()
 
+	mounted: ->
+		window._chatHistoryScrollToBottom = @scrollToBottom
+
 	methods:
 		# 建立 WebSocket 连接
 		connectWSLink: ->
@@ -447,7 +450,7 @@ export default
 					# 图片
 					"""
 						<a href="/#{ msg.message.encodeHTML() }" target="_blank">
-							<img src="/#{ msg.message.encodeHTML() }" />
+							<img src="/#{ msg.message.encodeHTML() }" onload="window._chatHistoryScrollToBottom()" />
 						</a>
 					"""
 
