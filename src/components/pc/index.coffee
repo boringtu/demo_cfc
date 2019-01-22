@@ -138,9 +138,6 @@ export default
 			@socket?.close()
 			@ws?.disconnect()
 
-	mounted: ->
-		window._chatHistoryScrollToBottom = @scrollToBottom
-
 	methods:
 		# 建立 WebSocket 连接
 		connectWSLink: ->
@@ -283,7 +280,7 @@ export default
 			# difference value
 			diff = conH - winH
 			return if diff < 0
-			win.velocity scrollTop: "#{ diff }px", {duration: duration}
+			win.velocity('finish').velocity scrollTop: "#{ diff + 20 }px", {duration: duration}
 
 		# 历史消息区当前位置是否位于最底部
 		isLocateBottom: ->
@@ -450,7 +447,7 @@ export default
 					# 图片
 					"""
 						<a href="/#{ msg.message.encodeHTML() }" target="_blank">
-							<img src="/#{ msg.message.encodeHTML() }" onload="window._chatHistoryScrollToBottom()" />
+							<img src="/#{ msg.message.encodeHTML() }" />
 						</a>
 					"""
 
