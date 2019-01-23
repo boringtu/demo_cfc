@@ -313,6 +313,7 @@ export default
 
 		# Event: 消息发送事件
 		eventSend: ->
+			return unless @inputText.trim()
 			# 转义（防xss）
 			text = @inputText.encodeHTML()
 			# 发送消息体（messageType 1: 文字 2: 图片）
