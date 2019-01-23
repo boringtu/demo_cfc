@@ -1,3 +1,10 @@
+
+html
+	font-size: 13.3333vw
+@media screen and (min-width: 750px)
+	html
+		font-size: 100px
+
 *
 	box-sizing: border-box
 	outline: 0
@@ -30,6 +37,8 @@ abbr[title]
 	cursor: help
 button
 	cursor: pointer
+	&[disabled]
+		opacity: .2 !important
 .clear
 	zoom: 1
 	&:after
@@ -57,10 +66,6 @@ button
 img[src=""]
 	display: none
 
-.el-button--primary
-	background-color: #0083ff
-	border-color: #0083ff
-
 body
 	position: absolute
 	z-index: 1
@@ -70,11 +75,9 @@ body
 	left: 0
 	overflow: auto
 	background-color: #fff
-	font-size: 14px
+	font-size: .3rem
 	width: 100%
 	height: 100%
-	min-height: 880px
-	min-width: 700px
 	display: flex
 	justify-content: center
 	align-items: center
@@ -84,11 +87,8 @@ body
 	-moz-osx-font-smoothing: grayscale
 	text-align: center
 	color: #2c3e50
-	width: 870px
-	height: 600px
-	box-shadow: 4px 7px 20px 0px rgba(0, 0, 0, .04)
-	border: 1px solid rgba(235, 235, 235, 1)
-	border-radius: 5px
+	width: 100%
+	height: 100%
 	position: relative
 	display: flex
 	flex-direction: column
@@ -110,67 +110,79 @@ body
 		right: 0
 		bottom: 0
 		left: 0
-		background-color: rgba(1, 1, 1, .2)
+		background-color: rgba(1, 1, 1, .4)
 	.dialog-content
 		position: relative
 		z-index: 2
-		width: 400px
-		height: 260px
-		border-radius: 5px
+		width: 6.4rem
+		height: 4rem
+		border-radius: .05rem
 		background-color: #fff
 		h2
-			font-size: 20px
-			line-height: 20px
-			padding: 18px 0 16px
+			font-size: .32rem
+			line-height: .32rem
+			padding: .34rem 0
 			color: #333
-			border-bottom: 1px solid #f5f5f5
+			border-bottom: 1px solid #ccc
 		ul
-			margin-top: 30px
+			margin-top: .4rem
 			li
 				display: flex
 				justify-content: flex-end
-				padding-right: 54px
-				line-height: 30px
+				padding-right: .9rem
+				line-height: .48rem
 				label
-					font-size: 14px
-					font-weight: 400
+					font-size: .28rem
+					font-weight: 500
 					color: #333
-				.el-input
-					width: 240px
-					margin-left: 10px
-					input
-						height: 30px
-						line-height: 30px
+				input
+					width: 3.6rem
+					height: .48rem
+					font-size: .28rem
+					line-height: .28rem
+					margin-left: .2rem
+					border: 1px solid #e6e6e6
+					border-radius: .05rem
+					padding: 0 .2rem
 				~ li
-					margin-top: 14px
-		.el-button
-			width: 100px
-			height: 36px
-			line-height: 36px
+					margin-top: .22rem
+		button
+			width: 1.6rem
+			height: .6rem
+			line-height: .6rem
 			padding: 0
-			margin-top: 30px
-
+			margin-top: .4rem
+			border: 0
+			border-radius: .05rem
+			color: #fff
+			font-size: .24rem
+			background-color: #0083ff
+			opacity: 1
 .tab-box
-	height: 60px
-	background-color: #f0f2f5
+	height: .88rem
+	background-color: #0083ff
 	display: flex
 	justify-content: space-between
 	align-items: center
-	.logo
-		margin-left: 28px
+	h2
+		color: #fff
+		font-size: .36rem
+		font-weight: 500
+		line-height: .88rem
+		width: 100%
 	.close
 		border: 0
 		background-color: transparent
 		position: absolute
 		z-index: 1
-		top: 20px
-		right: 24px
+		top: .18rem
+		left: .3rem
+		padding: .1rem
 		.icon
-			font-size: 20px
-			color: #666
-		&:hover
-			.icon
-				color: #333
+			font-size: .32rem
+			color: #fff
+		&:active
+			opacity: .9
 	.closing-confirm-box
 		position: absolute
 		z-index: 100
@@ -238,7 +250,6 @@ body
 		.chat-history
 			flex-grow: 1
 			position: relative
-			border-bottom: 1px solid #ebebeb
 			text-align: center
 			.loading-history
 				padding: 10px 0
@@ -280,21 +291,26 @@ body
 			left: 0
 			.chat-content
 				padding: 0 18px
-				font-size: 13px
+				font-size: .3rem
 				text-align: left
 				&:first-child
-					padding-top: 12px
+					padding-top: .24rem
 				.time-line
 					text-align: center
-					font-size: 14px
-					line-height: 14px
-					color: #666
+					span
+						display: inline-block
+						background-color: #ccc
+						font-size: .22rem
+						line-height: .36rem
+						color: #fff
+						border-radius: .05rem
+						padding: .02rem .14rem 0
 				// 气泡
 				.msg-bubble
 					// box-shadow: 0 0 10px 0 rgba(102, 102, 102, .06)
 					border: 1px solid
-					border-radius: 5px
-					padding: 8px 12px
+					border-radius: .05rem
+					padding: .1rem .2rem
 					position: relative
 					max-width: 100%
 					img
@@ -323,7 +339,7 @@ body
 				// 对方的消息
 				.msg-opposite
 					position: relative
-					padding: 9px 40px 9px 0
+					padding: .2rem .6rem .2rem 0
 					.msg-bubble
 						float: left
 						background-color: #fff
@@ -338,7 +354,7 @@ body
 				// 自己消息
 				.msg-self
 					position: relative
-					padding: 9px 0 9px 40px
+					padding: .2rem 0 .2rem .6rem
 					.msg-bubble
 						float: right
 						border-color: #329dff
@@ -355,49 +371,64 @@ body
 				// （新消息）分隔线
 				.separator
 			p.closed-notice
-				font-size: 14px
-				color: #999
-				padding: 20px 0 45px
+				text-align: center
+				padding: .48rem 0 .6rem
+				span
+					display: inline-block
+					background-color: #ccc
+					font-size: .22rem
+					line-height: .36rem
+					color: #fff
+					border-radius: .05rem
+					padding: .02rem .14rem 0
 		.chat-toolbar
 			flex-shrink: 0
 			position: relative
-			height: 36px
+			min-height: .98rem
 			background-color: #fafafa
 			display: flex
 			align-items: center
+			box-shadow: 0 -.08rem .2rem 0 rgba(0, 0, 0, .04)
 			.emoji-picker
 				> button
 					border: 0
 					background-color: transparent
-					color: #666
-					margin-left: 20px
 					.icon
-						font-size: 20px
-					&:hover
-						color: #333
+						padding: .15rem
+						font-size: .4rem
+						line-height: .4rem
+						border-radius: .05rem
+						transition: background-color .1s linear 0s
+						background-color: transparent
+						color: #999
+					&:active
+						.icon
+							background-color: #eee
+					&:first-child
+						margin-left: .25rem
 				.box-arrow
 					position: absolute
 					z-index: 2
-					bottom: 28px
-					left: 12px
-					width: 36px
-					height: 16px
+					bottom: .68rem
+					left: .28rem
+					width: .64rem
+					height: .32rem
 					overflow: hidden
 					display: block
 					i
 						display: block
-						width: 18px
-						height: 18px
+						width: .32rem
+						height: .32rem
 						background-color: #fff
 						transform: rotate(45deg)
 						position: relative
-						bottom: 9px
-						left: 9px
-						box-shadow: 0 0 10px 0 rgba(102, 102, 102, .6)
+						bottom: .16rem
+						left: .16rem
+						box-shadow: 0 0 .12rem 0 rgba(102, 102, 102, .6)
 				.face-box
 					position: absolute
 					z-index: 1
-					bottom: 44px
+					bottom: 1rem
 					width: 100%
 					padding: 0 10px
 					> div
@@ -406,28 +437,27 @@ body
 						border-radius: 5px
 						background-color: #fff
 						overflow: scroll
-						height: 200px
-						box-shadow: 0 0 10px 0 rgba(102, 102, 102, .6)
-						padding: 4px
+						height: 4rem
+						box-shadow: 0 0 .12rem 0 rgba(102, 102, 102, .6)
+						padding: .08rem
 					.face
 						cursor: pointer
-						padding: 2px 0
-						font-size: 22px
-						width: 30px
-						height: 30px
-						line-height: 26px
+						padding: .04rem 0
+						font-size: .5rem
+						line-height: .68rem
+						width: .68rem
+						height: .68rem
 						text-align: center
 						display: block
-						border-radius: 5px
-						background-color: #fff
+						border-radius: .05rem
+						background-color: transparent
 						transition: background-color .1s linear 0s
-						&:hover
-							background-color: #ccc
+						&:active
+							background-color: #eee
 			form
 				position: relative
-				margin-left: 20px
-				width: 20px
-				height: 20px
+				width: .7rem
+				height: .7rem
 				overflow: hidden
 				input
 					opacity: 0
@@ -441,49 +471,49 @@ body
 				.icon
 					position: relative
 					z-index: 1
-					color: #666
-					font-size: 20px
-					line-height: 20px
+					font-size: .4rem
+					line-height: .4rem
+					padding: .15rem
+					transition: background-color .1s linear 0s
+					background-color: transparent
+					color: #999
 				&:hover .icon
-					color: #333
-		.chat-sendbox
-			background-color: #fafafa
-			height: 175px
-			position: relative
-			textarea
-				display: block
-				border: 0
-				resize: none
-				width: 100%
-				outline: 0
-				font-size: 14px
-				line-height: 16px
-				height: 100%
-				padding: 0 5px 0 15px
-				background-color: #fbfbfb
-				overflow-y: visible
-			button.send
-				position: absolute
-				z-index: 1
-				right: 24px
-				bottom: 20px
-				line-height: 34px
-				padding: 0 34px
-				font-size: 16px
+					background-color: #eee
+			.chat-sendbox
+				flex-grow: 1
+				textarea
+					display: block
+					border: 0
+					resize: none
+					width: 100%
+					outline: 0
+					font-size: .3rem
+					height: .98rem
+					line-height: .34rem
+					min-height: .98rem
+					padding: .32rem 1.4rem .32rem .15rem
+					background-color: #fbfbfb
+					overflow-y: visible
+				button.send
+					position: absolute
+					z-index: 1
+					right: 0
+					bottom: 0
+					font-size: .3rem
+					width: 1.4rem
+					height: .98rem
+					line-height: .98rem
+					border: 0
+					background-color: #0083ff
+					opacity: 1
+					color: #fff
+					&:active
+						opacity: .9
 
-	.advertising-box
-		width: 270px
-		background-color: #f0f0f0
-		a
-			display: block
-			height: 100%
-			img
-				width: 100%
-				height: 100%
 	&.active
 		.chat-toolbar
 			background-color: #fff
-		.chat-sendbox
-			background-color: #fff
-			textarea
+			.chat-sendbox
 				background-color: #fff
+				textarea
+					background-color: #fff

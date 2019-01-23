@@ -16,6 +16,8 @@ class SendWS
 
 export default
 	data: ->
+		# tab-box 显示的内容
+		name: '客服代表'
 		# 是否主动关闭 WS
 		closingActively: 0
 		# 排队系统 前面排的人数
@@ -48,16 +50,6 @@ export default
 		isClosed: false
 		# 是否弹框
 		popup: 0
-		# pc广告配置
-		conf:
-			# logo link
-			logo_href: 'javascript:;'
-			# logo img src
-			logo_media_id: ''
-			# right ad link
-			right_ad_href: 'javascript:;'
-			# right ad img src
-			right_ad_media_id: ''
 		form:
 			name: ''
 			phone: ''
@@ -121,16 +113,6 @@ export default
 				@connectWSLink()
 				# 加载首屏历史消息数据
 				@fetchHistory 1
-
-		# 加载图片配置
-		Utils.ajax ALPHA.API_PATH.common.conf, params: type: 'pc_dialog'
-		.then (res) =>
-			data = res.data
-			for item in data
-				if /_media_id$/.test item.key
-					@conf[item.key] = "/#{ item.other }"
-				else
-					@conf[item.key] = "https://#{ item.value }"
 
 		# 如页面被关闭，关闭 WebSocket 连接
 		window.addEventListener 'unload', =>

@@ -5,11 +5,11 @@ module.exports = {
 			template: 'public/pc.html',
 			filename: 'pc.html'
 		},
-		// mobile: {
-		// 	entry: 'src/mobile/main',
-		// 	template: 'public/mobile.html',
-		// 	filename: 'mobile.html'
-		// }
+		mobile: {
+			entry: 'src/mobile/main',
+			template: 'public/mobile.html',
+			filename: 'mobile.html'
+		}
 	},
 	devServer: {
 		before: require('./mock'),
