@@ -1,7 +1,7 @@
 #app
 	.tab-box
 		h2 {{ name }}
-		button.close(@click="eventCloseTheChat")
+		button.close(@click="eventCloseTheChat" v-if="false")
 			i.icon.icon-close
 		.closing-confirm-box(v-if="confirmToClose")
 			span.box-arrow
