@@ -102,7 +102,7 @@ export default
 		Utils.ajax ALPHA.API_PATH.user.init,
 			method: 'POST'
 			data:
-				channel: 1
+				channel: 0
 				origin: origin
 		.then (res) =>
 			data = res.data
