@@ -130,7 +130,7 @@ export default
 				if /_media_id$/.test item.key
 					@conf[item.key] = "/#{ item.other }"
 				else
-					@conf[item.key] = "https://#{ item.value }"
+					@conf[item.key] = if item.value then "https://#{ item.value }" else 'javascript:;'
 
 		# 如页面被关闭，关闭 WebSocket 连接
 		window.addEventListener 'unload', =>
