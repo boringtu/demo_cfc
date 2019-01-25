@@ -398,7 +398,8 @@ export default
 
 		# Event: 发送图片
 		eventSendPic: (event) ->
-			file = event.target.files[0]
+			target = event.target
+			file = target.files[0]
 
 			# 限制图片大小 小于 10Mb
 			if file.size / 1024 / 1024 > 10
@@ -413,7 +414,7 @@ export default
 			# 此段注释代码是不依赖网络，将图片直接显示在历史消息里，并方便加上 loading 状态的功能
 			reader = new FileReader()
 			reader.addEventListener 'load', (event) ->
-				data = event.target.result
+				data = target.result
 				image = new Image()
 				# 加载图片获取图片的宽高
 				image.addEventListener 'load', (event) ->
@@ -436,6 +437,8 @@ export default
 					sendBody = messageType: 2, message: fileUrl
 					# 发送消息
 					@wsSend ALPHA.API_PATH.WS.SEND_CODE.MESSAGE, JSON.stringify sendBody
+			# 清空 value，否则重复上传同一个文件不会触发 change 事件
+			target.value = ''
 		# 渲染消息
 		renderMessage: (msg) ->
 			return '' unless msg and msg.message
