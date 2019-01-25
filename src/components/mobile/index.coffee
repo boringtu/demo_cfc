@@ -173,12 +173,7 @@ export default
 
 		# 结束当前对话
 		closingTheChat: ->
-			# 弹出提示
-			vm.$notify
-				type: 'success'
-				title: '会话结束'
-				message: '您已结束会话'
-			setTimeout (=> window.close()), 1000
+			window.close()
 
 		# 获取历史消息数据
 		fetchHistory: (isReset) ->
