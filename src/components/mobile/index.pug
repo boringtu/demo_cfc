@@ -82,9 +82,9 @@
 			ul
 				li
 					label 账号
-					input(v-model="form.name" placeholder="选填")
+					input(v-model="form.name" placeholder="选填" maxlength="16")
 				li
 					label 手机号
-					input(v-model="form.phone" placeholder="选填" @keydown.native="eventKeydownPhoneNum($event)")
+					input(v-model="form.phone" placeholder="选填" @keydown.native="eventKeydownPhoneNum($event)" maxlength="11")
 			div
 				button(@click="eventStartChatting") 立即咨询
