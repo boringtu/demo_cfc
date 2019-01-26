@@ -3,13 +3,6 @@
 		h2 {{ name }}
 		button.close(@click="eventCloseTheChat")
 			i.icon.icon-close
-		.closing-confirm-box(v-if="confirmToClose")
-			span.box-arrow
-				i
-			p 确定要结束对话吗？
-			div
-				button(type="default" @click="confirmToClose = 0") 取消
-				button(type="primary" @click="confirmToClose = 0, closingTheChat()") 确定
 	.content-box(:class="{active: isReadyToType}")
 		.chat-box
 			.queue-msg(v-if="queueNum").
@@ -88,3 +81,10 @@
 					input(v-model="form.phone" placeholder="选填" @keydown.native="eventKeydownPhoneNum($event)" maxlength="11")
 			div
 				button(@click="eventStartChatting") 立即咨询
+	.closing-confirm-box(v-if="confirmToClose")
+		.dialog-mask
+		.dialog-content
+			h2 确定要结束对话吗？
+			div
+				button(@click="confirmToClose = 0") 取消
+				button(@click="confirmToClose = 0, closingTheChat()") 确定

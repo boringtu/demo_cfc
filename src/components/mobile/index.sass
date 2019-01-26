@@ -159,6 +159,61 @@ body
 			font-size: .24rem
 			background-color: #0083ff
 			opacity: 1
+.closing-confirm-box
+	position: fixed
+	z-index: 100
+	top: 0
+	right: 0
+	bottom: 0
+	left: 0
+	display: flex
+	justify-content: center
+	align-items: center
+	.dialog-mask
+		position: absolute
+		z-index: 1
+		top: 0
+		right: 0
+		bottom: 0
+		left: 0
+		background-color: rgba(1, 1, 1, .4)
+	.dialog-content
+		width: 4.8rem
+		height: 2.4rem
+		background-color: #fff
+		border: 1px solid #ccc
+		border-radius: .12rem
+		z-index: 2
+		display: flex
+		flex-direction: column
+		justify-content: space-between
+		overflow: hidden
+		h2
+			font-size: .36rem
+			line-height: .36rem
+			padding-top: .62rem
+			height: 1.6rem
+			font-weight: 500
+			color: #333
+			border-bottom: 1px solid #ccc
+		div
+			flex-grow: 1
+			display: flex
+			justify-content: space-between
+			align-items: stretch
+			button
+				width: 50%
+				display: block
+				background-color: #fff
+				color: #329dff
+				font-size: .3rem
+				border: 0
+				font-weight: 500
+				&:first-child
+					border-right: 1px solid #ccc
+					color: #999
+				&:active
+					opacity: .7
 .tab-box
 	height: .88rem
 	background-color: #0083ff
@@ -177,68 +232,13 @@ body
 		position: absolute
 		z-index: 1
 		top: .18rem
-		left: .3rem
+		right: .3rem
 		padding: .1rem
 		.icon
 			font-size: .32rem
 			color: #fff
 		&:active
 			opacity: .9
-	.closing-confirm-box
-		position: absolute
-		z-index: 100
-		left: .1rem
-		top: .85rem
-		border: 1px solid #cecece
-		border-radius: .05rem
-		background-color: #fff
-		width: 4.8rem
-		text-align: center
-		p
-			font-size: .36rem
-			line-height: .36rem
-			padding: .36rem 0
-			color: #333
-		> div
-			display: flex
-			justify-content: space-between
-			padding: 0 .28rem .4rem
-		button
-			border: 1px solid #dcdfe6
-			border-radius: .05rem
-			line-height: .65rem
-			padding: 0 .65rem
-			font-size: .32rem
-			background-color: #fff
-			color: #606266
-			opacity: 1
-			white-space: nowrap
-			~ button
-				margin-left: 0px
-				background-color: #66b1ff
-				border-color: #66b1ff
-				color: #fff
-			&:active
-				opacity: .9
-		.box-arrow
-			position: absolute
-			z-index: 2
-			top: -10px
-			left: .1rem
-			width: 36px
-			height: 10px
-			overflow: hidden
-			display: block
-			i
-				display: block
-				border: 1px solid #cecece
-				width: 18px
-				height: 18px
-				background-color: #fff
-				transform: rotate(45deg)
-				position: relative
-				top: 3px
-				left: 9px
 .content-box
 	flex-grow: 1
 	display: flex
