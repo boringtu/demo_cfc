@@ -12,6 +12,15 @@
 
 	<div id="app"></div>
 
+<noscript>
+<style>
+.noscript {position: fixed; z-index: 99999; top: 0; right: 0; bottom: 0; left: 0; display: flex; justify-content: center; align-items: center;}
+.noscript .mask { position: absolute; z-index: 1; top: 0; right: 0; bottom: 0; left: 0; background-color: rgba(0, 0, 0, 0.5);}
+.noscript .content { position: relative; z-index: 2; border-radius: 5px; background-color: white;}
+.noscript .content p { font-size: 18px; line-height: 80px; padding: 0 20px;}
+</style>
+<div class="noscript"><div class="mask"></div><div class="content"><p>您的浏览器禁用了JS脚本运行，请启用该功能</p></div></div>
+</noscript>
 <script type="text/javascript" src="<%= BASE_URL %>libs/vue.min.js"></script>
 </body>
 </html>
