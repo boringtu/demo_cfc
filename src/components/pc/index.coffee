@@ -347,7 +347,42 @@ export default
 			@$nextTick =>
 				@$refs.input.focus()
 
-		# Event: 历史消息列表滚动事件
+		# Event: 向输入框内黏贴
+		eventOnPaste:(event) ->
+			clipboardData = event.clipboardData or event.originalEvent.clipboardData
+			if clipboardData.getData
+				for i in [0..clipboardData.items.length]
+					item = clipboardData.items[i]
+					console.log(item);
+					if item && item.kind == "file"
+						file = item.getAsFile()
+						if file.size / 1024 / 1024 > 10
+							# 弹出提示
+							vm.$notify
+								type: 'warning'
+								title: '图片发送失败'
+								message: "图片大小不可超过10Mb"
+							return
+						formData = new FormData()
+						formData.append 'multipartFile', file
+						# 发起请求
+						@axios.post ALPHA.API_PATH.common.upload, formData, headers: 'Content-Type': 'multipart/form-data'
+						.then (res) =>
+							console.log res.data
+							if res.msg is 'success'
+								fileUrl = res.data.fileUrl
+								# 发送消息体（messageType 1: 文字 2: 图片）
+								sendBody = messageType: 2, message: fileUrl
+								# 发送消息
+								@wsSend ALPHA.API_PATH.WS.SEND_CODE.MESSAGE, JSON.stringify sendBody
+
+
+
+
+
+
+
+# Event: 历史消息列表滚动事件
 		eventScrollHistory: ->
 			return if @noMoreHistory
 

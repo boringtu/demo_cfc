@@ -323,7 +323,8 @@ export default
 			@$nextTick =>
 				@$refs.input.focus()
 
-		# Event: 历史消息列表滚动事件
+
+# Event: 历史消息列表滚动事件
 		eventScrollHistory: ->
 			return if @noMoreHistory
 

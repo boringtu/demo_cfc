@@ -66,6 +66,7 @@
 					placeholder="请输入消息..."
 					@keydown.enter.exact="$event.preventDefault()"
 					@keyup.enter.exact="eventSend"
+					@paste="eventOnPaste($event)"
 					@focus="isReadyToType = 1"
 					@blur="isReadyToType = 0"
 					v-model="inputText"
