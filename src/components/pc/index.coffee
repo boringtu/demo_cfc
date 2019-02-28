@@ -100,6 +100,7 @@ export default
 				"#{ M }-#{ d } #{ H }:#{ m }:#{ s }"
 
 	created: ->
+		window._imgLoaded = @eventImgLoaded
 		# 来源地址
 		origin = Utils.getUrlParams().origin
 		if origin
@@ -348,13 +349,12 @@ export default
 				@$refs.input.focus()
 
 		# Event: 向输入框内黏贴
-		eventOnPaste:(event) ->
+		eventOnPaste: (event) ->
 			clipboardData = event.clipboardData or event.originalEvent.clipboardData
-			if clipboardData.getData
+			if clipboardData and clipboardData.getData
 				for i in [0..clipboardData.items.length]
 					item = clipboardData.items[i]
-					console.log(item);
-					if item && item.kind == "file"
+					if item and item.kind is "file"
 						file = item.getAsFile()
 						if file.size / 1024 / 1024 > 10
 							# 弹出提示
@@ -368,7 +368,6 @@ export default
 						# 发起请求
 						@axios.post ALPHA.API_PATH.common.upload, formData, headers: 'Content-Type': 'multipart/form-data'
 						.then (res) =>
-							console.log res.data
 							if res.msg is 'success'
 								fileUrl = res.data.fileUrl
 								# 发送消息体（messageType 1: 文字 2: 图片）
@@ -431,10 +430,10 @@ export default
 			@chatHistoryList = [...list, msg]
 			if msg.sendType is 2
 				# 己方消息，滚动到底部
-				@$nextTick => @scrollToBottom 80
+				@$nextTick => @scrollToBottom 0
 			else
 				if @isLocateBottom()
-					@$nextTick => @scrollToBottom()
+					@$nextTick => @scrollToBottom 0
 				else
 					# 对方消息，追加到 newUnreadElList
 					@newUnreadElList.push msg
@@ -501,12 +500,16 @@ export default
 								char
 					text.encodeHTML()
 				when 2
+					toBottom = msg.sendType is 1 or @isLocateBottom()
 					# 图片
 					"""
 						<a href="/#{ msg.message.encodeHTML() }" target="_blank">
-							<img src="/#{ msg.message.encodeHTML() }" />
+							<img src="/#{ msg.message.encodeHTML() }" onload="_imgLoaded(#{ +toBottom })" />
 						</a>
 					"""
+
+		eventImgLoaded: (toBottom) ->
+			@scrollToBottom 0 if +toBottom
 
 		# Event: 立即咨询点击事件
 		eventStartChatting: ->
