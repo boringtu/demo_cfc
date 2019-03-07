@@ -1,4 +1,5 @@
 'use strict'
+import twemoji from 'twemoji'
 import Utils from '@/assets/scripts/utils'
 
 class SendWS
@@ -13,6 +14,14 @@ class SendWS
 		@ws = null
 		@socket = null
 		return 1
+
+# 解决安卓手机输入框被软键盘遮住的问题
+if /Android [4-6]/.test navigator.appVersion
+    window.addEventListener 'resize', ->
+        if /^(INPUT|TEXTAREA)$/.test document.activeElement.tagName
+            setTimeout ->
+                document.activeElement.scrollIntoViewIfNeeded()
+            , 0
 
 export default
 	data: ->
@@ -54,6 +63,8 @@ export default
 		form:
 			name: ''
 			phone: ''
+
+		twemoji: ALPHA.twemoji
 
 	computed:
 		# 新推送的未读消息条数
@@ -180,7 +191,13 @@ export default
 
 		# 结束当前对话
 		closingTheChat: ->
-			window.close()
+			if Utils.isApp()
+				if Utils.isAndroid()
+					javascript:js2android.closeTalking()
+				else
+					window.webkit.messageHandlers.closeTalking()
+			else
+				window.close()
 
 		# 获取历史消息数据
 		fetchHistory: (isReset) ->
@@ -313,10 +330,14 @@ export default
 			# 清空消息框
 			@inputText = ''
 
+		createEmoji: (emoji) ->
+			emoji = String.fromCodePoint "0x#{ emoji }"
+			twemoji.parse emoji, ALPHA.twemoji.params
+
 		# 向输入框插入表情，并关闭表情选择面板
 		insertEmoji: (emoji) ->
 			# 向输入框追加表情
-			@inputText += emoji unless @isClosed
+			@inputText += "[/#{ emoji }]" unless @isClosed
 			# 关闭表情选择面板
 			@$refs.emojiPicker.hide()
 			# 使输入框获取焦点
@@ -324,7 +345,7 @@ export default
 				@$refs.input.focus()
 
 
-# Event: 历史消息列表滚动事件
+		# Event: 历史消息列表滚动事件
 		eventScrollHistory: ->
 			return if @noMoreHistory
 
@@ -439,6 +460,10 @@ export default
 								'&nbsp;'
 							else
 								char
+					# processing emoji
+					text = text.replace /\[\/\w+\]/g, (face) ->
+						emoji = String.fromCodePoint "0x#{ face.match(/\[\/(\w+)\]/)[1] }"
+						twemoji.parse emoji
 					text.encodeHTML()
 				when 2
 					# 图片

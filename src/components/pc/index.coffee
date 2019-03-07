@@ -1,4 +1,5 @@
 'use strict'
+import twemoji from 'twemoji'
 import Utils from '@/assets/scripts/utils'
 
 class SendWS
@@ -62,6 +63,8 @@ export default
 		form:
 			name: ''
 			phone: ''
+
+		twemoji: ALPHA.twemoji
 
 	computed:
 		# 新推送的未读消息条数
@@ -338,10 +341,14 @@ export default
 			# 清空消息框
 			@inputText = ''
 
+		createEmoji: (emoji) ->
+			emoji = String.fromCodePoint "0x#{ emoji }"
+			twemoji.parse emoji, ALPHA.twemoji.params
+
 		# 向输入框插入表情，并关闭表情选择面板
 		insertEmoji: (emoji) ->
 			# 向输入框追加表情
-			@inputText += emoji unless @isClosed
+			@inputText += "[/#{ emoji }]" unless @isClosed
 			# 关闭表情选择面板
 			@$refs.emojiPicker.hide()
 			# 使输入框获取焦点
@@ -375,13 +382,7 @@ export default
 								# 发送消息
 								@wsSend ALPHA.API_PATH.WS.SEND_CODE.MESSAGE, JSON.stringify sendBody
 
-
-
-
-
-
-
-# Event: 历史消息列表滚动事件
+		# Event: 历史消息列表滚动事件
 		eventScrollHistory: ->
 			return if @noMoreHistory
 
@@ -498,6 +499,10 @@ export default
 								'&nbsp;'
 							else
 								char
+					# processing emoji
+					text = text.replace /\[\/\w+\]/g, (face) ->
+						emoji = String.fromCodePoint "0x#{ face.match(/\[\/(\w+)\]/)[1] }"
+						twemoji.parse emoji
 					text.encodeHTML()
 				when 2
 					toBottom = msg.sendType is 1 or @isLocateBottom()

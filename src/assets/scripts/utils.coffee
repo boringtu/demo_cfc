@@ -32,6 +32,10 @@ class Utils
 			data[temp[0]] = temp[1]
 		data
 
+	@isApp: -> Utils.getUrlParams().hasOwnProperty 'isApp'
+
+	@isAndroid: -> /Android|Linux/.test navigator.userAgent
+
 	###
 	 # 封装的 axios
 	 #
