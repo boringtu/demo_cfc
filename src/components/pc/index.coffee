@@ -49,7 +49,7 @@ export default
 		# 会话是否已关闭
 		isClosed: false
 		# 是否弹框
-		popup: ''
+		popup: 0
 		# 访客信息
 		visitorInfo: []
 		# 访客引导语
@@ -123,14 +123,6 @@ export default
 				origin: origin
 		.then (res) =>
 			data = res.data
-			@popup = data.popup
-			@visitorMsg = data.msg
-			@visitorInfo = data.info
-			for item in @visitorInfo
-				if item.filed is "name"
-					item.maxLenth = 16
-				if item.filed is "phone"
-					item.maxLenth = 11
 			ALPHA.userId = @userId = data.userId
 			@popup = popup = +data.popup
 			unless popup
@@ -138,6 +130,14 @@ export default
 				@connectWSLink()
 				# 加载首屏历史消息数据
 				@fetchHistory 1
+			else
+				@visitorMsg = data.msg
+				@visitorInfo = data.info
+				for item in @visitorInfo
+					if item.filed is 'name'
+						item.maxLenth = 16
+					if item.filed is 'phone'
+						item.maxLenth = 11
 
 		# 加载图片配置
 		Utils.ajax ALPHA.API_PATH.common.conf, params: type: 'pc_dialog'
