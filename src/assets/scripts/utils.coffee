@@ -76,6 +76,49 @@ class Utils
 			break unless element = element.offsetParent
 		actualTop
 
+	###
+		# 设置光标选中文本
+		# @param input [Object] 目标 element 对象
+		# @param selectionStart [Number] 开始下标
+		# @param selectionEnd [Number] 结束下标
+	###
+	@setSelection = (input, selectionStart, selectionEnd) ->
+		return 0 if input.value.length is 0
+		selectionEnd = input.value.length unless selectionEnd
+
+		if input.createTextRange
+			range = input.createTextRange()
+			range.collapse true
+			range.moveEnd 'character', selectionEnd
+			range.moveStart 'character', selectionStart
+			range.select()
+		else if input.setSelectionRange
+			input.focus()
+			input.setSelectionRange selectionStart, selectionEnd
+
+	###
+		# 移动光标到指定位置 / 获取当前光标位置
+		# @param input [Object] 目标 element 对象
+		# @param position [Number] 可选。 光标位置（下标）。如无此参数，则返回当前光标位置
+	###
+	@cursorPosition = (input, position) ->
+		pos = 0
+		if position?
+			# 移动光标到指定位置
+			return 0 if input.value.length is 0
+			Utils.setSelection input, position, position
+		else
+			# 获取当前光标位置
+			if document.selection
+				# TODO IE 获取的值有问题
+				input.focus()
+				range = document.selection.createRange()
+				# range = input.createTextRange()
+				range.moveStart 'character', -input.value.length
+				return range.text.length
+			else
+				return input.selectionStart
+
 #****************************** 内部函数 ******************************#
 
 ###

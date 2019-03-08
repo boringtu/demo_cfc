@@ -360,8 +360,28 @@ export default
 
 		# 向输入框插入表情，并关闭表情选择面板
 		insertEmoji: (emoji) ->
+			el = @$refs.input
 			# 向输入框追加表情
-			@inputText += "[/#{ emoji }]" unless @isClosed
+			unless @isClosed
+				emoji = "[/#{ emoji }]"
+
+				if document.selection
+					el.focus()
+					selectRange = document.selection.createRange()
+					selectRange.text = emoji
+					el.focus()
+					@inputText = el.value
+				else
+					txt = @inputText
+					cursorPos = Utils.cursorPosition el
+					# 光标处插入表情
+					@inputText = "#{ txt.substr 0, cursorPos }#{ emoji }#{ txt.substr cursorPos }"
+					# 光标放到表情后
+					cursorPos += emoji.length
+					# 使输入框获取焦点
+					setTimeout =>
+						Utils.cursorPosition el, cursorPos
+					, 20
 			# 关闭表情选择面板
 			@emojiPickerState = 0
 			# 使输入框获取焦点
