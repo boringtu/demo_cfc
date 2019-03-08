@@ -47,10 +47,10 @@
 						p.closed-notice(v-if="isClosed") 客服已结束对话，如再次联系客服请重新打开页面
 
 			.chat-toolbar
-				emoji-picker(@emoji="insert" class="emoji-picker" ref="emojiPicker")
-					button(slot="emoji-invoker" slot-scope="{ events }" v-on="events")
+				.emoji-picker
+					button(@click="emojiPickerState = 1 - emojiPickerState")
 						i.icon.icon-face
-					div(class="face-wrapper" slot="emoji-picker" slot-scope="{ emojis, insert }")
+					div(class="face-wrapper" v-if="emojiPickerState")
 						span.box-arrow
 							i
 						div.face-box
