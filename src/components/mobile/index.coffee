@@ -69,6 +69,7 @@ export default
 			phone: ''
 
 		twemoji: ALPHA.twemoji
+		emojiPickerState: 0
 
 	computed:
 		# 新推送的未读消息条数
@@ -353,7 +354,7 @@ export default
 			# 向输入框追加表情
 			@inputText += "[/#{ emoji }]" unless @isClosed
 			# 关闭表情选择面板
-			@$refs.emojiPicker.hide()
+			@emojiPickerState = 0
 			# 使输入框获取焦点
 			@$nextTick =>
 				@$refs.input.focus()

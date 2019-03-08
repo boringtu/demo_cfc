@@ -3,7 +3,6 @@ import Vue from 'vue'
 import App from './App.vue'
 import axios from 'axios'
 import VueAxios from 'vue-axios'
-import { EmojiPickerPlugin } from 'vue-emoji-picker'
 import ALPHA from '@/assets/scripts/alpha'
 import Utils from '@/assets/scripts/utils'
 import Velocity from 'velocity-animate'
@@ -11,7 +10,6 @@ import 'velocity-animate/velocity.ui'
 import SockJS from 'sockjs-client'
 import Stomp from 'stompjs'
 
-Vue.use EmojiPickerPlugin
 Vue.use VueAxios, axios
 
 Vue.config.productionTip = false
