@@ -77,10 +77,10 @@ class Utils
 		actualTop
 
 	###
-		# 设置光标选中文本
-		# @param input [Object] 目标 element 对象
-		# @param selectionStart [Number] 开始下标
-		# @param selectionEnd [Number] 结束下标
+	 # 设置光标选中文本
+	 # @param input [Object] 目标 element 对象
+	 # @param selectionStart [Number] 开始下标
+	 # @param selectionEnd [Number] 结束下标
 	###
 	@setSelection = (input, selectionStart, selectionEnd) ->
 		return 0 if input.value.length is 0
@@ -97,9 +97,9 @@ class Utils
 			input.setSelectionRange selectionStart, selectionEnd
 
 	###
-		# 移动光标到指定位置 / 获取当前光标位置
-		# @param input [Object] 目标 element 对象
-		# @param position [Number] 可选。 光标位置（下标）。如无此参数，则返回当前光标位置
+	 # 移动光标到指定位置 / 获取当前光标位置
+	 # @param input [Object] 目标 element 对象
+	 # @param position [Number] 可选。 光标位置（下标）。如无此参数，则返回当前光标位置
 	###
 	@cursorPosition = (input, position) ->
 		pos = 0
@@ -118,6 +118,13 @@ class Utils
 				return range.text.length
 			else
 				return input.selectionStart
+
+	###
+	 # 将光标焦点放到最后
+	###
+	@focusEnd = (input) ->
+		Utils.cursorPosition input, input.value.length
+		input
 
 #****************************** 内部函数 ******************************#
 
