@@ -50,11 +50,14 @@ export default
 		# 会话是否已关闭
 		isClosed: false
 		# 是否弹框
-		popup: 0
+		popup: ''
+		# 访客信息
+		visitorInfo: []
+		# 访客引导语
+		visitorMsg: ''
 		form:
 			name: ''
 			phone: ''
-
 	computed:
 		# 新推送的未读消息条数
 		newUnreadCount: -> @newUnreadElList.length
@@ -92,6 +95,7 @@ export default
 				"#{ M }-#{ d } #{ H }:#{ m }:#{ s }"
 
 	created: ->
+		window.x = @
 		# 来源地址
 		origin = Utils.getUrlParams().origin
 		if origin
@@ -107,6 +111,14 @@ export default
 				origin: origin
 		.then (res) =>
 			data = res.data
+			@popup = data.popup
+			@visitorMsg = data.msg
+			@visitorInfo = data.info
+			for item in @visitorInfo
+				if item.filed is "name"
+					item.maxLenth = 16
+				if item.filed is "phone"
+					item.maxLenth = 11
 			ALPHA.userId = @userId = data.userId
 			@popup = popup = +data.popup
 			unless popup
@@ -197,7 +209,7 @@ export default
 				params.size = @msgAppendCount
 			# 目前最前面的那条消息的 timestamp（非首屏）
 			params.timestamp = @referTimeStamp unless isReset
-			
+
 			# 发起请求
 			promise = Utils.ajax ALPHA.API_PATH.user.history,
 				params: params
@@ -364,7 +376,7 @@ export default
 		clearNewUnread: ->
 			# 清空 新推送的未读消息 element 引用列表
 			@newUnreadElList = []
-		
+
 		# 服务器推送来的消息（包括己方发送的消息）
 		addMessage: (msg) ->
 			list = @chatHistoryList
@@ -466,4 +478,3 @@ export default
 			return if keyCode is 8
 			event.preventDefault() unless keyCode in [48..57].concat [96..105]
 			event.preventDefault() if @form.phone.length > 10
-
