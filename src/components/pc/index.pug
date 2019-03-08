@@ -83,13 +83,11 @@
 	.dialog-box(v-if="popup")
 		.dialog-mask
 		.dialog-content
-			h2 请填写您的账号，以便我们更好的服务~
+			h2(v-if="visitorMsg.length>0") {{visitorMsg}}
 			ul
-				li
-					label 账号
-					el-input(v-model="form.name" placeholder="选填" maxlength="16")
-				li
-					label 手机号
-					el-input(v-model="form.phone" placeholder="选填" @keydown.native="eventKeydownPhoneNum($event)" maxlength="11")
+				li(v-for="item,index in visitorInfo")
+					label {{item.name}}
+						span {{item.require === 0 ? "": "*"}}
+					el-input(v-model="form[item.filed]" :maxlength="item.maxLenth")
 			div
 				el-button(type="primary" @click="eventStartChatting") 立即咨询
