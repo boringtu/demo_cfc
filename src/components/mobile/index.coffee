@@ -210,7 +210,7 @@ export default
 				if Utils.isAndroid()
 					javascript:js2android.closeTalking()
 				else
-					window.webkit.messageHandlers.closeTalking()
+					window.webkit.messageHandlers.closeTalking.postMessage()
 			else
 				window.close()
 
