@@ -64,9 +64,9 @@ export default
 		visitorInfo: []
 		# 访客引导语
 		visitorMsg: ''
-		form:
-			name: ''
-			phone: ''
+		form: {}
+		msgSure: false
+		msgTrue: false
 
 		twemoji: ALPHA.twemoji
 
@@ -114,7 +114,6 @@ export default
 			origin = decodeURIComponent origin
 		else
 			origin = ''
-
 		# 初始化数据
 		Utils.ajax ALPHA.API_PATH.user.init,
 			method: 'POST'
@@ -133,12 +132,11 @@ export default
 			else
 				@visitorMsg = data.msg
 				@visitorInfo = data.info
+				console.log @visitorInfo
 				for item in @visitorInfo
-					if item.filed is "name"
-						item.maxLenth = 16
-					if item.filed is "phone"
-						item.maxLenth = 11
-
+					continue if item.ban
+					@form[item.filed] = ''
+					item.maxLength = ALPHA.initAttrs[item.filed].maxlength
 
 		# 如页面被关闭，关闭 WebSocket 连接
 		window.addEventListener 'unload', =>
@@ -489,6 +487,11 @@ export default
 
 		# Event: 立即咨询点击事件
 		eventStartChatting: ->
+			for	item in @visitorInfo
+				continue if item.ban
+				if item.require and not @form[item.filed]
+					@msgSure = true
+					return
 			Utils.ajax ALPHA.API_PATH.user.new,
 				method: 'POST'
 				data: @form
@@ -500,8 +503,10 @@ export default
 				@fetchHistory 1
 
 		# Event: 手机号 keydown
-		eventKeydownPhoneNum: (event) ->
-			keyCode = event.keyCode
-			return if keyCode is 8
-			event.preventDefault() unless keyCode in [48..57].concat [96..105]
-			event.preventDefault() if @form.phone.length > 10
+		# eventKeydownPhoneNum: (event) ->
+		# 	keyCode = event.keyCode
+		# 	return if keyCode is 8
+		# 	event.preventDefault() unless keyCode in [48..57].concat [96..105]
+		# 	event.preventDefault() if @form.phone.length > 10
+		closeModal: ->
+			@msgSure = false

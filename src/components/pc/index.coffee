@@ -64,9 +64,7 @@ export default
 			right_ad_href: 'javascript:;'
 			# right ad img src
 			right_ad_media_id: ''
-		form:
-			name: ''
-			phone: ''
+		form: {}
 
 		twemoji: ALPHA.twemoji
 
@@ -134,10 +132,9 @@ export default
 				@visitorMsg = data.msg
 				@visitorInfo = data.info
 				for item in @visitorInfo
-					if item.filed is 'name'
-						item.maxLenth = 16
-					if item.filed is 'phone'
-						item.maxLenth = 11
+					continue if item.ban
+					@form[item.filed] = ''
+					item.maxLength = ALPHA.initAttrs[item.filed].maxlength
 
 		# 加载图片配置
 		Utils.ajax ALPHA.API_PATH.common.conf, params: type: 'pc_dialog'
@@ -529,6 +526,14 @@ export default
 
 		# Event: 立即咨询点击事件
 		eventStartChatting: ->
+			for	item in @visitorInfo
+				continue if item.ban
+				if item.require and not @form[item.filed]
+					vm.$notify
+						type: 'warning'
+						title: ''
+						message: "请填写必填信息"
+					return
 			Utils.ajax ALPHA.API_PATH.user.new,
 				method: 'POST'
 				data: @form

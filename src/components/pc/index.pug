@@ -83,11 +83,12 @@
 	.dialog-box(v-if="popup")
 		.dialog-mask
 		.dialog-content
+			.line
 			h2(v-if="visitorMsg.length>0") {{visitorMsg}}
 			ul
 				li(v-for="item,index in visitorInfo")
 					label {{item.name}}
 						span {{item.require === 0 ? "": "*"}}
-					el-input(v-model="form[item.filed]" :maxlength="item.maxLenth")
+					el-input(v-model="form[item.filed]" :maxlength="item.maxLength")
 			div
 				el-button(type="primary" @click="eventStartChatting") 立即咨询

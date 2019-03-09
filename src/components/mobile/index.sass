@@ -116,9 +116,13 @@ body
 		position: relative
 		z-index: 2
 		width: 6.4rem
-		// height: 4rem
 		border-radius: .05rem
 		background-color: #fff
+		.line
+			width: 100%
+			height: 3px
+			background: #2297F1
+			border-radius: 3px 3px 0 0
 		h2
 			max-height: 1.91rem
 			overflow: auto
@@ -130,6 +134,7 @@ body
 			color: #333
 			border-bottom: 1px solid #ccc
 			background: #EFF6FF
+			word-wrap: break-word
 		ul
 			margin-top: .4rem
 			li
@@ -224,6 +229,34 @@ body
 					color: #999
 				&:active
 					opacity: .7
+.mackSureModal
+	position: fixed
+	z-index: 1000
+	top: 4.5rem
+	right: 0
+	bottom: 0
+	left: 10%
+	width: 80%
+	height: 4rem
+	background: white
+	border-radius: .2rem
+	text-align: center
+	h2
+		font-size: .42rem
+		margin-top: 1rem
+		font-weight: normal
+	button
+		width: 2.8rem
+		height: .8rem
+		line-height: .8rem
+		padding: 0
+		margin-top: 1rem
+		margin-bottom: .41rem
+		border: 0
+		border-radius: .1rem
+		color: #fff
+		font-size: .24rem
+		background-color: #0083ff
 .tab-box
 	height: .88rem
 	background-color: #0083ff

@@ -10,6 +10,12 @@ export default do ->
 	### ALPHA 命名空间 ###
 	window.ALPHA = {}
 	Object.defineProperties window.ALPHA,
+		initAttrs:
+			writable: off, value:
+				name:
+					maxlength: 16
+				phone:
+					maxlength: 11
 		# 枚举: 接口地址
 		API_PATH:
 			writable: off, value:
@@ -124,5 +130,5 @@ export default do ->
 		# 发送
 		send:
 			writable: off, value: '/c/chatting'
-	
+
 	window.ALPHA
