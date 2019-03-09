@@ -71,15 +71,13 @@
 	.dialog-box(v-if="popup")
 		.dialog-mask
 		.dialog-content
+			.line(v-if="visitorMsg.length<=0")
 			h2(v-if="visitorMsg.length>0") {{visitorMsg}}
 			ul
 				li(v-for="item,index in visitorInfo")
 					label {{item.name}}
 						span {{item.require === 0 ? "": "*"}}
-					input(v-model="form[item.filed]" :maxlength="item.maxLenth")
-				// li
-				// 	label 手机号
-				// 	input(v-model="form.phone" placeholder="选填" @keydown.native="eventKeydownPhoneNum($event)" maxlength="11")
+					input(v-model="form[item.filed]" :maxlength="item.maxLength")
 			div
 				button(@click="eventStartChatting") 立即咨询
 	.closing-confirm-box(v-if="confirmToClose")
@@ -89,3 +87,6 @@
 			div
 				button(@click="confirmToClose = 0") 取消
 				button(@click="confirmToClose = 0, closingTheChat()") 确定
+	.mackSureModal(v-if="msgSure")
+		h2 请填写必要信息
+		button(@click="closeModal") 确定
